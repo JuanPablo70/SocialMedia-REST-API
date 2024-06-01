@@ -26,6 +26,7 @@ public class User {
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Post> posts;
 
     public User(Integer id, String name, LocalDate birthDate, List<Post> posts) {

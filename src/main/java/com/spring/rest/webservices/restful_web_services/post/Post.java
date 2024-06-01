@@ -3,20 +3,23 @@ package com.spring.rest.webservices.restful_web_services.post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.rest.webservices.restful_web_services.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Post {
 
     @Id
     @GeneratedValue
-    private String id;
+    private int id;
 
+    @Size(min = 10)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
-    public Post(String id, String description) {
+    public Post(int id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -24,11 +27,11 @@ public class Post {
     protected Post() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,6 +41,14 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
