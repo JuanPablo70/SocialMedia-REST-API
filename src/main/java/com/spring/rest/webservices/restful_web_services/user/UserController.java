@@ -3,6 +3,7 @@ package com.spring.rest.webservices.restful_web_services.user;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import com.spring.rest.webservices.restful_web_services.jpa.UserRepository;
+import com.spring.rest.webservices.restful_web_services.post.Post;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -60,6 +61,15 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public List<Post> retrievePostsByUserId(@PathVariable int id) {
+        Optional<User> user = repository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id: " + id);
+        }
+        return user.get().getPosts();
     }
 
 }

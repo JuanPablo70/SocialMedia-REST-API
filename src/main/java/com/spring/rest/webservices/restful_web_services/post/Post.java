@@ -14,12 +14,14 @@ public class Post {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private User user;
 
     public Post(String id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    protected Post() {
     }
 
     public String getId() {

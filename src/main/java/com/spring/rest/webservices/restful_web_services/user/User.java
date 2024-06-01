@@ -26,8 +26,14 @@ public class User {
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Post> posts;
+
+    public User(Integer id, String name, LocalDate birthDate, List<Post> posts) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.posts = posts;
+    }
 
     public User(Integer id, String name, LocalDate birthDate) {
         this.id = id;
@@ -62,12 +68,21 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
+                ", posts=" + posts +
                 '}';
     }
 }
