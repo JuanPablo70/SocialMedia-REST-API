@@ -96,4 +96,20 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping("/users/{userId}/posts/{postId}")
+    public EntityModel<Post> retrievePostByUserIdAndPostId(@PathVariable int userId, @PathVariable int postId) {
+        Post post = postRepository.findByIdAndUserId(postId, userId);
+        if (post == null) {
+            throw new PostNotFoundException("User " + userId + " with Post " + postId + " was not found");
+        }
+
+        EntityModel<Post> entityModel = EntityModel.of(post);
+
+        // Link pointing to the retrievePostsByUserId method
+        WebMvcLinkBuilder link = linkTo((methodOn(this.getClass())).retrievePostsByUserId(userId));
+        entityModel.add(link.withRel("all-user-posts"));
+
+        return entityModel;
+    }
+
 }
